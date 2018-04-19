@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections;
 
 namespace fragile
 {
@@ -20,12 +21,28 @@ namespace fragile
         public int val;
         public BTN left;
         public BTN right;
+
+        public override string ToString()
+        {
+            return string.Concat(val.ToString(), left?.ToString(), right?.ToString());
+        }
+
+        public override bool Equals(object obj)
+        {
+            return ToString().Equals(obj?.ToString());
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     class BTNComparer
     {
         public void run()
         {
+
             BTN a = new BTN
             {
                 val = 1,
@@ -109,43 +126,15 @@ namespace fragile
                     val = 3
                 }
             };
-
-            Console.WriteLine("Is a equal to b? {0}", BTreesAreEquals(a, b));
-            Console.WriteLine("Is a equal to c? {0}", BTreesAreEquals(a, c));
-            Console.WriteLine("Is a equal to d? {0}", BTreesAreEquals(a, d));
-            Console.WriteLine("Is b equal to c? {0}", BTreesAreEquals(b, c));
-            Console.WriteLine("Is b equal to d? {0}", BTreesAreEquals(b, d));
-        }
-
-        bool BTreesAreEquals(BTN a, BTN b)
-        {
-            if (BTreeAsString(a) == BTreeAsString(b))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        string BTreeAsString(BTN a)
-        {
-            var result = a.val.ToString();
-
-            if (a.left != null)
-            {
-                result = result + "-L-" + BTreeAsString(a.left);
-            }
-
-            if (a.right != null)
-            {
-                result = result + "-R-" + BTreeAsString(a.right);
-            }
-
-            return result;
+            Console.WriteLine("Is a equal to b? {0}", a.Equals(b));
+            Console.WriteLine("Is a equal to c? {0}", a.Equals(c));
+            Console.WriteLine("Is a equal to d? {0}", a.Equals(d));
+            Console.WriteLine("Is b equal to c? {0}", b.Equals(c));
+            Console.WriteLine("Is b equal to d? {0}", b.Equals(d));
+   
         }
 
     }   
 
 }
+
